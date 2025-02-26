@@ -2,6 +2,8 @@ import socket
 import json
 import customtkinter as ctk
 from tkinter import messagebox
+import tkinter
+from PIL import Image ,ImageTk
 
 HOST = '127.0.0.1'
 PORT = 12345
@@ -17,6 +19,7 @@ class JobClient(ctk.CTk):
         self.geometry("600x500")
         ctk.set_appearance_mode("dark")
 
+
         self.connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
             self.connection.connect((HOST, PORT))
@@ -26,6 +29,21 @@ class JobClient(ctk.CTk):
             return
 
         self.show_main_menu()
+        self.add_images()
+
+    def add_images(self):
+
+        left_img = Image.open("photos/ashdod.png")
+        right_img = Image.open("photos/mekif.png")
+
+        left_ctk_img = ctk.CTkImage(light_image=left_img, size=(50, 50))
+        right_ctk_img = ctk.CTkImage(light_image=right_img, size=(50, 50))
+
+        self.left_label = ctk.CTkLabel(self, image=left_ctk_img, text="")
+        self.left_label.place(x=10, y=10)
+
+        self.right_label = ctk.CTkLabel(self, image=right_ctk_img, text="")
+        self.right_label.place(x=540, y=10)
 
     def clear_window(self):
         for widget in self.winfo_children():
