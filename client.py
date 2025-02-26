@@ -29,6 +29,7 @@ class JobClient(ctk.CTk):
             return
 
         self.show_main_menu()
+
         self.add_images()
 
     def add_images(self):
@@ -40,14 +41,22 @@ class JobClient(ctk.CTk):
         right_ctk_img = ctk.CTkImage(light_image=right_img, size=(50, 50))
 
         self.left_label = ctk.CTkLabel(self, image=left_ctk_img, text="")
+        self.left_label.image = left_ctk_img
         self.left_label.place(x=10, y=10)
 
         self.right_label = ctk.CTkLabel(self, image=right_ctk_img, text="")
+        self.right_label.image = right_ctk_img
         self.right_label.place(x=540, y=10)
+
+        self.left_label.lift()
+        self.right_label.lift()
+
+
 
     def clear_window(self):
         for widget in self.winfo_children():
-            widget.destroy()
+            if widget not in {self.left_label, self.right_label}:  # Не трогаем картинки
+                widget.destroy()
 
     def show_main_menu(self):
         self.clear_window()
